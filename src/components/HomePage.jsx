@@ -5,7 +5,7 @@ import { FiUpload } from "react-icons/fi";
 import { ImageGrid } from "./ImageGrid.jsx";
 import { UploadLoadingModal } from "./utils.jsx";
 
-export const Home = () => {
+export const HomePage = () => {
   const [selectedImages, setSelectedImages] = useState([]);
   const [openUploadModal, setOpenUploadModal] = useState(false);
   const [uploadQueue, setUploadQueue] = useState([]);

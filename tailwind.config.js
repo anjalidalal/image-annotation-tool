@@ -25,6 +25,9 @@ module.exports = {
         "surface-stroke": "#555559",
         "surface-hover": "#E3E3E3",
       },
+      boxShadow: {
+        boxShadow: "0px 1px 6px 0px rgba(0, 0, 0, 0.25)",
+      },
     },
   },
   plugins: [],
