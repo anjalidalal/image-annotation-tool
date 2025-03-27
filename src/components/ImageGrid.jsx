@@ -49,7 +49,7 @@ export const ImageGrid = ({ images }) => {
                 <img
                   src={image.url}
                   alt={image.name}
-                  className="w-full rounded-md h-40 object-cover"
+                  className="w-full rounded-md h-40 object-contain"
                 />
               </div>
               {dropdownOpen === index && (
