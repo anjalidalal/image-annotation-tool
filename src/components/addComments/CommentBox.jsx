@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addComment, addReply } from "../../redux/commentsSlice";
 import { AddCommentModal } from "./AddCommentModal";
 
-const CommentBox = ({ x, y, id, onClose }) => {
+const CommentBox = ({ x, y, id, onClose, commentData }) => {
   const dispatch = useDispatch();
   const [text, setText] = useState("");
   const [replyText, setReplyText] = useState("");
@@ -14,9 +14,11 @@ const CommentBox = ({ x, y, id, onClose }) => {
   const handleSubmit = () => {
     if (text.trim()) {
       if (id) {
-        dispatch(addReply({ parentId: id, replyText }));
+        dispatch(addReply({ parentId: id, text: replyText }));
+        setReplyText("");
       } else {
         dispatch(addComment({ x: x ?? "", y: y ?? "", text }));
+        setText("");
       }
       onClose();
     }
@@ -29,13 +31,16 @@ const CommentBox = ({ x, y, id, onClose }) => {
         <div className="w-[240px] z-50 relative p-3 bg-white shadow-lg rounded-lg border">
           <h3 className="text-gray-600 font-medium">Comment</h3>
           <div className="flex w-full items-start flex-col gap-3 mt-2">
-            <div className="items-center gap-1 flex">
-              <div className="bg-[#1E7631] text-surface-primary rounded-full h-6 w-6 flex justify-center items-center">
-                A
+            <div className="gap-1 flex-col flex">
+              <div className="text-text-dark-p items-center gap-1 flex">
+                <div className="bg-[#1E7631] text-surface-primary rounded-full h-6 w-6 flex justify-center items-center">
+                  A
+                </div>
+                <p className="text-xs whitespace-nowrap text-text-dark-p font-medium">
+                  Akanksha Sagar
+                </p>
               </div>
-              <p className="text-xs whitespace-nowrap text-text-dark-p font-medium">
-                Akanksha Sagar
-              </p>
+              <p className="text-xs ml-7 font-normal">{commentData.text}</p>
             </div>
             <div
               className={`${

@@ -5,6 +5,8 @@ import { FiUpload } from "react-icons/fi";
 import { ImageGrid } from "./ImageGrid.jsx";
 import { UploadLoadingModal } from "./utils.jsx";
 
+import { v4 as uuidv4 } from "uuid";
+
 export const HomePage = () => {
   const [selectedImages, setSelectedImages] = useState([]);
   const [openUploadModal, setOpenUploadModal] = useState(false);
@@ -26,8 +28,9 @@ export const HomePage = () => {
         const newName = `Photo ${totalIndex
           .toString()
           .padStart(2, "0")}.${fileExtension}`;
+        const imageId = uuidv4();
         return {
-          id: `${newName}_${index}`,
+          id: imageId,
           name: newName,
           url: URL.createObjectURL(file),
         };

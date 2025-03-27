@@ -82,6 +82,7 @@ const ImageWithComments = ({ image, onClose }) => {
                   x={comment.x}
                   y={comment.y}
                   id={openCommentsThreadModal}
+                  commentData={comment}
                 />
               ) : (
                 <>
@@ -96,7 +97,6 @@ const ImageWithComments = ({ image, onClose }) => {
                     onClick={() => setOpenCommentsThreadModal(comment.id)}
                     className="relative z-40 max-w-[240px] hidden group-hover:block text-text-dark-p bg-surface-primary rounded-xl p-2 shadow-boxShadow"
                   >
-                    {comment.id}
                     <div className="items-center gap-1 flex">
                       <div className="bg-[#1E7631] text-surface-primary rounded-full h-6 w-6 flex justify-center items-center">
                         A
