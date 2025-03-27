@@ -6,18 +6,22 @@ import { MdOutlineEdit } from "react-icons/md";
 import { BiCommentAdd } from "react-icons/bi";
 import { LuDownload } from "react-icons/lu";
 import { IoClose } from "react-icons/io5";
+import { useSelector } from "react-redux";
+import commentPosted from "./../../images/comment-posted.svg";
+import { v4 as uuidv4 } from "uuid";
 
 const ImageWithComments = ({ image, onClose }) => {
-  const comments = [];
+  const comments = useSelector((state) => state.comments.comments);
   const [openCommentBoxes, setOpenCommentBoxes] = useState([]);
   const [hoverPosition, setHoverPosition] = useState(null);
+  const [openCommentsThreadModal, setOpenCommentsThreadModal] = useState(null);
 
   const handleAddCommentBoxClick = (e) => {
     const box = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - box.left;
     const y = e.clientY - box.top;
 
-    const newCommentBox = { id: Date.now(), x, y };
+    const newCommentBox = { id: uuidv4(), x, y };
     setOpenCommentBoxes((prev) => [...prev, newCommentBox]);
   };
 
@@ -70,12 +74,43 @@ const ImageWithComments = ({ image, onClose }) => {
           {comments.map((comment) => (
             <div
               key={comment.id}
-              className="absolute cursor-pointer"
+              className="absolute group cursor-pointer"
               style={{ top: comment.y, left: comment.x }}
             >
-              <span className="bg-green-500 text-white rounded-full px-2">
-                {comment.id}
-              </span>
+              {openCommentsThreadModal === comment.id ? (
+                <CommentBox
+                  x={comment.x}
+                  y={comment.y}
+                  id={openCommentsThreadModal}
+                />
+              ) : (
+                <>
+                  <img
+                    src={commentPosted}
+                    alt={`comment-${comment.id}`}
+                    className="object-cover group-hover:hidden"
+                    width={30}
+                    height={30}
+                  />
+                  <div
+                    onClick={() => setOpenCommentsThreadModal(comment.id)}
+                    className="relative z-40 max-w-[240px] hidden group-hover:block text-text-dark-p bg-surface-primary rounded-xl p-2 shadow-boxShadow"
+                  >
+                    {comment.id}
+                    <div className="items-center gap-1 flex">
+                      <div className="bg-[#1E7631] text-surface-primary rounded-full h-6 w-6 flex justify-center items-center">
+                        A
+                      </div>
+                      <p className="text-xs whitespace-nowrap text-text-dark-p font-medium">
+                        Akanksha Sagar
+                      </p>
+                    </div>
+                    <p className="text-xs ml-7 text-text-dark-p font-normal">
+                      {comment.text}
+                    </p>
+                  </div>
+                </>
+              )}
             </div>
           ))}
           {openCommentBoxes.map(({ id, x, y }) => (
@@ -84,6 +119,7 @@ const ImageWithComments = ({ image, onClose }) => {
               x={x}
               y={y}
               onClose={() => closeCommentBox(id)}
+              id={null}
             />
           ))}
         </div>
