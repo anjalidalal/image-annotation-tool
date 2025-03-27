@@ -81,8 +81,9 @@ const ImageWithComments = ({ image, onClose }) => {
                 <CommentBox
                   x={comment.x}
                   y={comment.y}
-                  id={openCommentsThreadModal}
+                  id={comment.id}
                   commentData={comment}
+                  onClose={() => closeCommentBox(comment.id)}
                 />
               ) : (
                 <>
@@ -119,7 +120,6 @@ const ImageWithComments = ({ image, onClose }) => {
               x={x}
               y={y}
               onClose={() => closeCommentBox(id)}
-              id={null}
             />
           ))}
         </div>
